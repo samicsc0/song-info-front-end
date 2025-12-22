@@ -7,7 +7,9 @@ export default function Stats(){
         <div className={css({
             display:'grid',
             gridTemplateColumns:{lg:'repeat(4,minmax(0,1fr))', md:'repeat(2,minmax(0,1fr))',sm:'repeat(1,minmax(0,1fr))'},
-            gap:'16px'
+            gap:'16px',
+            width:"94%",
+            margin:"auto"
         })}>
             <StatCards title={"Total Songs"} stat={5} icon={Music} />
             <StatCards title={"Total Artists"} stat={4} icon={Users} />
