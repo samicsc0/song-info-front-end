@@ -10,7 +10,6 @@ export default function List(){
         })}>
             <p>Songs</p>
             <p>Albums</p>
-            <p>Genres</p>
             <p>Artists</p>
             <p>Favorites</p>
         </div>
