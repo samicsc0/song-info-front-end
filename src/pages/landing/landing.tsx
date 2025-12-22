@@ -1,9 +1,16 @@
+import { css } from "../../../styled-system/css/css";
 import { Header } from "../../components/header";
+import Stats from "../../sections/stats";
 
 export default function Landing(){
     return(
-        <div>
+        <div className={css({
+            display:'flex',
+            flexDirection:'column',
+            gap:'24px'
+        })}>
             <Header />
+            <Stats />
         </div>
     )
 }
