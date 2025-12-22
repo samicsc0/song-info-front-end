@@ -1,8 +1,17 @@
 import {  Music, Users, Disc3, ListMusic  } from "lucide-react";
 import StatCards from "../../components/stat-card";
 import { css } from "../../../styled-system/css/css";
+import type { RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStat } from "../../store/statSlice";
+import { useEffect } from "react";
 
 export default function Stats(){
+    const dispatch = useDispatch()
+    const {data,loading} = useSelector((state:RootState)=>state.stats)
+    useEffect(()=>{
+        dispatch(fetchStat())
+    },[dispatch])
     return(
         <div className={css({
             display:'grid',
@@ -11,10 +20,10 @@ export default function Stats(){
             width:"94%",
             margin:"auto"
         })}>
-            <StatCards title={"Total Songs"} stat={5} icon={Music} />
-            <StatCards title={"Total Artists"} stat={4} icon={Users} />
-            <StatCards title={"Genres"} stat={3} icon={ListMusic} />
-            <StatCards title={"Albums"} stat={2} icon={Disc3} />
+            <StatCards title={"Total Songs"} stat={data?data.totalSongs:0} icon={Music} isLoading={loading}/>
+            <StatCards title={"Total Artists"} stat={data ? data.totalArtists : 0} icon={Users} isLoading={loading} />
+            <StatCards title={"Genres"} stat={data ? data.totalGenres : 0} icon={ListMusic} isLoading={loading} />
+            <StatCards title={"Albums"} stat={data ? data.totalAlbums : 0} icon={Disc3} isLoading={loading} />
         </div>
     )
 }

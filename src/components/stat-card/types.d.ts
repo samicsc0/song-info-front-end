@@ -3,6 +3,7 @@ import { LucideIcon } from "lucide-react";
 interface StatCardProps{
     title:string,
     stat:number,
-    icon:LucideIcon
+    icon:LucideIcon,
+    isLoading:boolean
 }
 export {StatCardProps}

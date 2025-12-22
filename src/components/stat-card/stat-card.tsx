@@ -1,5 +1,6 @@
 import type { StatCardProps } from "./types";
 import { css } from "../../../styled-system/css/css";
+import { Loader2 } from "lucide-react";
 
 export default function StatCards({...props}:StatCardProps){
     return(
@@ -16,10 +17,14 @@ export default function StatCards({...props}:StatCardProps){
             <p className={css({
                 fontWeight:"light"
             })}>{props.title}</p>
-            <p className={css({
+            {!props.isLoading? <p className={css({
                 fontSize:"3xl",
                 fontWeight:'bold'
             })}>{props.stat}</p>
+            : 
+            <p>
+                <Loader2 className={css({animation: "spin 1s linear infinite"})}/>
+            </p>}
             </div>
             <div className={css({
                 backgroundColor:'blue.500',

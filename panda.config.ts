@@ -12,7 +12,20 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      animationStyles:{
+        rotate:{
+          DEFAULT:{
+            value:{
+              animationName:'spin',
+            animationDuration: '1s',
+            animationTimingFunction: 'linear',
+            animationIterationCount: 'infinite',
+            }
+          }
+        }
+      }
+    },
   },
 
   // The output directory for your css system

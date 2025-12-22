@@ -7,4 +7,11 @@ async function getAllSongs(){
     }
     return res.json()
 }
-export {getAllSongs}
+async function getStats(){
+    const res = await fetch(`${envConfig.BASE_URL}/song/stat`)
+    if(!res.ok){
+        throw new Error("Fetching songs failed")
+    }
+    return res.json()
+}
+export {getAllSongs,getStats}
