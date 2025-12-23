@@ -3,13 +3,20 @@ import { css } from "../../../styled-system/css/css";
 import type { SongItemProps } from "./types";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type SyntheticEvent } from "react";
 import { deleteSong } from "../../store/songSlice";
 
 export default function SongItem({ ...props }: SongItemProps) {
     const dispatch = useDispatch();
     const { loading, error } = useSelector((state: RootState) => state.songs);
     const [submitState, setSubmitState] = useState<"idle" | "pending" | "success" | "error">("idle");
+    const fallbackAlbumArt = "/image.png";
+
+    function handleImageError(event: SyntheticEvent<HTMLImageElement>) {
+        if (event.currentTarget.src.endsWith(fallbackAlbumArt)) return;
+        event.currentTarget.src = fallbackAlbumArt;
+    }
+
     useEffect(() => {
         if (submitState === "pending" && !loading) {
             if (error) {
@@ -25,7 +32,11 @@ export default function SongItem({ ...props }: SongItemProps) {
     }
     return (
         <div className={css({ border: 'solid', rounded: 'xl' })}>
-            <img src={props.albumArt} className={css({ width: 'full', objectFit: 'cover', roundedTop: 'xl', objectPosition: 'center' })} />
+            <img
+                src={props.albumArt}
+                onError={handleImageError}
+                className={css({ width: 'full', objectFit: 'cover', roundedTop: 'xl', objectPosition: 'center' })}
+            />
             <div className={css({ marginTop: '4', paddingX: '2', paddingBottom: '2', display: 'flex', flexDirection: 'column', gap: '2' })}>
                 <div className={css({ display: 'flex', justifyContent: 'space-between' })}>
                     <p className={css({ fontSize: 'xl' })}>{props.title}</p>

@@ -45,6 +45,5 @@ async function deleteSong(id: string) {
     if (res.status === 204) {
         return { data: null }
     }
-    return res.json()
 }
 export { getAllSongs, getStats, addSong, editSong, deleteSong }

@@ -14,7 +14,7 @@ export default function EditSong({ ...props }: EditSongProps) {
     function onSubmitHandler(event: SyntheticEvent) {
         event.preventDefault();
         setSubmitState("pending");
-        dispatch(editSong({...value,_id:props.song._id}));
+        dispatch(editSong({ ...value, _id: props.song._id }));
     }
 
     useEffect(() => {
@@ -29,53 +29,70 @@ export default function EditSong({ ...props }: EditSongProps) {
                 setValues({ title: '', artist: '', album: '', genre: '', secure_url: '' });
             }
         }
-        if(submitState === 'success'){
+        if (submitState === 'success') {
             props.onClose()
         }
     }, [loading, error, submitState]);
     return (
-        <div className={css({
-            backgroundColor: 'white',
-            color: 'black',
-            padding: '12',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            margin: 'auto'
-        })}>
-            <h1>Edit {props.song.title}</h1>
-            <form className={css({
+        <div
+            className={css({
+                position: 'fixed',
+                inset: '0',
                 display: 'flex',
-                flexDirection: 'column',
-                gap: '4',
-                marginY: '16'
-            })} onSubmit={onSubmitHandler}>
-                <input placeholder="Song title" value={value.title} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, title: event.target.value })) }} required />
-                <input placeholder="Artist" value={value.artist} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, artist: event.target.value })) }} required />
-                <input placeholder="Album" value={value.album} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, album: event.target.value })) }} required />
-                <input placeholder="Genre" value={value.genre} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, genre: event.target.value })) }} required />
-                <input placeholder="Link to Album Art" value={value.secure_url} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, secure_url: event.target.value })) }} required />
-                <div className={css({
-                    minHeight: '6',
-                    color: submitState === "error" ? 'red' : 'green'
-                })}>
-                    {loading && "Submitting..."}
-                    {!loading && submitState === "error" && (error ?? "Failed to add song")}
-                    {!loading && submitState === "success" && "Song edited successfully"}
-                </div>
-                <div className={css({
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: { base: '4', md: '6' },
+                backgroundColor: 'rgba(0,0,0,0.45)',
+                zIndex: '50'
+            })}
+        >
+            <div
+                className={css({
+                    backgroundColor: 'white',
+                    color: 'black',
+                    padding: { base: '6', md: '10' },
+                    width: 'full',
+                    maxWidth: '640px',
+                    borderRadius: 'xl',
+                    boxShadow: 'lg',
+                    maxHeight: '90vh',
+                    overflowY: 'auto'
+                })}
+                onClick={(event) => event.stopPropagation()}
+            >
+                <h1>Edit {props.song.title}</h1>
+                <form className={css({
                     display: 'flex',
-                    gap: '4'
-                })}>
-                    <button className={css({
-                        color: 'white'
-                    })} onClick={() => props.onClose()} type="button">Cancel</button>
-                    <button className={css({
-                        color: 'white'
-                    })} type="submit" disabled={loading}>Submit</button>
-                </div>
-            </form>
+                    flexDirection: 'column',
+                    gap: '4',
+                    marginY: '16'
+                })} onSubmit={onSubmitHandler}>
+                    <input placeholder="Song title" value={value.title} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, title: event.target.value })) }} required />
+                    <input placeholder="Artist" value={value.artist} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, artist: event.target.value })) }} required />
+                    <input placeholder="Album" value={value.album} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, album: event.target.value })) }} required />
+                    <input placeholder="Genre" value={value.genre} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, genre: event.target.value })) }} required />
+                    <input placeholder="Link to Album Art" value={value.secure_url} disabled={loading} className={css({ border: 'solid', paddingY: '2' })} onChange={(event) => { setValues((prev) => ({ ...prev, secure_url: event.target.value })) }} required />
+                    <div className={css({
+                        minHeight: '6',
+                        color: submitState === "error" ? 'red' : 'green'
+                    })}>
+                        {loading && "Submitting..."}
+                        {!loading && submitState === "error" && (error ?? "Failed to add song")}
+                        {!loading && submitState === "success" && "Song edited successfully"}
+                    </div>
+                    <div className={css({
+                        display: 'flex',
+                        gap: '4'
+                    })}>
+                        <button className={css({
+                            backgroundColor: 'red'
+                        })} onClick={() => props.onClose()} type="button">Cancel</button>
+                        <button className={css({
+                            color: 'white'
+                        })} type="submit" disabled={loading}>Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
