@@ -30,18 +30,18 @@ const songSlice = createSlice({
             state.loading = false
             state.error = action.payload
         },
-        addSong(state,_action:PayloadAction<Song>){
+        addSong(state, _action: PayloadAction<Song>) {
             state.loading = true
         },
-        addSongSuccess(state,action:PayloadAction<Song>){
+        addSongSuccess(state, action: PayloadAction<Song>) {
             state.loading = false
             state.data.push(action.payload)
         },
-        addSongError(state,action:PayloadAction<string>){
+        addSongError(state, action: PayloadAction<string>) {
             state.loading = false
             state.error = action.payload
         },
-        editSong(state, _action: PayloadAction<Song>){
+        editSong(state, _action: PayloadAction<Song>) {
             state.loading = true
         },
         editSongSuccess(state, action: PayloadAction<Song>) {
@@ -55,7 +55,21 @@ const songSlice = createSlice({
             state.loading = false
             state.error = action.payload
         },
+        deleteSong(state, _action: PayloadAction<string>) {
+            state.loading = true
+        },
+        deleteSongSuccess(state, action: PayloadAction<string>) {
+            state.loading = false;
+            const index = state.data.findIndex(item => item._id === action.payload);
+            if (index !== -1) {
+                state.data.splice(index, 1);
+            }
+        },
+        deleteSongError(state, action: PayloadAction<string>) {
+            state.loading = false
+            state.error = action.payload
+        },
     }
 })
-export const { fetchSongs, fetchSongsError, fetchSongsSuccess, addSong, addSongError, addSongSuccess, editSong, editSongSuccess, editSongError } = songSlice.actions
+export const { fetchSongs, fetchSongsError, fetchSongsSuccess, addSong, addSongError, addSongSuccess, editSong, editSongSuccess, editSongError, deleteSong, deleteSongSuccess, deleteSongError } = songSlice.actions
 export default songSlice.reducer 

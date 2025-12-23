@@ -11,16 +11,10 @@ import EditSong from "../../components/edit-song";
 export default function List() {
     const dispatch = useDispatch();
     const { data, error, loading } = useSelector((state: RootState) => state.songs)
-    const [list,setList] = useState<Song[]>([])
     const [edit,setEdit] = useState<Song | null>()
     useEffect(() => {
         dispatch(fetchSongs())
     }, [dispatch])
-    useEffect(()=>{
-        if(data){
-            setList(data )
-        }
-    },[data])
     return (
         <>
             <div className={css({
@@ -41,7 +35,7 @@ export default function List() {
                 gap: '2',
                 margin: "auto"
             })}>
-                {list.map(item => <SongItem title={item.title} artist={item.artist} album={item.album} genre={item.genre} albumArt={item.secure_url} onEdit={() => setEdit(item)} _id={item._id!}/>)}
+                {data.map(item => <SongItem key={item._id} title={item.title} artist={item.artist} album={item.album} genre={item.genre} albumArt={item.secure_url} onEdit={() => setEdit(item)} _id={item._id!}/>)}
             </div>}
             {edit && <EditSong song={edit} onClose={()=>setEdit(null)} />}
         </>

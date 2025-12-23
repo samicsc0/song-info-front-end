@@ -25,7 +25,7 @@ async function addSong({ ...params }: AddSongParams) {
     }
     return res.json()
 }
-async function editSong({...params}:EditSongParams){
+async function editSong({ ...params }: EditSongParams) {
     const res = await fetch(`${envConfig.BASE_URL}/song/${params._id}`, {
         method: "PATCH", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(params),
@@ -35,4 +35,16 @@ async function editSong({...params}:EditSongParams){
     }
     return res.json()
 }
-export { getAllSongs, getStats, addSong, editSong }
+async function deleteSong(id: string) {
+    const res = await fetch(`${envConfig.BASE_URL}/song/${id}`, {
+        method: "DELETE", headers: { "Content-Type": "application/json" }
+    })
+    if (!res.ok) {
+        throw new Error("Deleting song failed")
+    }
+    if (res.status === 204) {
+        return { data: null }
+    }
+    return res.json()
+}
+export { getAllSongs, getStats, addSong, editSong, deleteSong }
