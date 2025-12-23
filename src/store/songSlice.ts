@@ -29,8 +29,19 @@ const songSlice = createSlice({
         fetchSongsError(state, action: PayloadAction<string>) {
             state.loading = false
             state.error = action.payload
+        },
+        addSong(state,_action:PayloadAction<Song>){
+            state.loading = true
+        },
+        addSongSuccess(state,action:PayloadAction<Song>){
+            state.loading = false
+            state.data.push(action.payload)
+        },
+        addSongError(state,action:PayloadAction<string>){
+            state.loading = false
+            state.error = action.payload
         }
     }
 })
-export const { fetchSongs, fetchSongsError, fetchSongsSuccess } = songSlice.actions
+export const { fetchSongs, fetchSongsError, fetchSongsSuccess,addSong,addSongError,addSongSuccess } = songSlice.actions
 export default songSlice.reducer 

@@ -30,7 +30,7 @@ export default function List() {
                 <p>Artists</p>
                 <p>Favorites</p>
             </div>
-            {loading && <p><Loader2 className={css({})} /></p>}
+            {loading && <p><Loader2 className={css({ animation: "spin 1s linear infinite" })} /></p>}
             {error && <p>{error}</p>}
             {data && <div className={css({
                 display: 'grid',
