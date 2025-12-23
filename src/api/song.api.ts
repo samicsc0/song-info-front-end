@@ -1,5 +1,5 @@
 import envConfig from "../config"
-import type { AddSongParams } from "./types"
+import type { AddSongParams, EditSongParams } from "./types"
 
 async function getAllSongs() {
     const res = await fetch(`${envConfig.BASE_URL}/song`)
@@ -25,4 +25,14 @@ async function addSong({ ...params }: AddSongParams) {
     }
     return res.json()
 }
-export { getAllSongs, getStats, addSong }
+async function editSong({...params}:EditSongParams){
+    const res = await fetch(`${envConfig.BASE_URL}/song/${params._id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(params),
+    })
+    if (!res.ok) {
+        throw new Error("Editing song failed")
+    }
+    return res.json()
+}
+export { getAllSongs, getStats, addSong, editSong }

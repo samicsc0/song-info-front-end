@@ -40,8 +40,22 @@ const songSlice = createSlice({
         addSongError(state,action:PayloadAction<string>){
             state.loading = false
             state.error = action.payload
-        }
+        },
+        editSong(state, _action: PayloadAction<Song>){
+            state.loading = true
+        },
+        editSongSuccess(state, action: PayloadAction<Song>) {
+            state.loading = false;
+            const index = state.data.findIndex(item => item._id === action.payload._id);
+            if (index !== -1) {
+                state.data[index] = action.payload;
+            }
+        },
+        editSongError(state, action: PayloadAction<string>) {
+            state.loading = false
+            state.error = action.payload
+        },
     }
 })
-export const { fetchSongs, fetchSongsError, fetchSongsSuccess,addSong,addSongError,addSongSuccess } = songSlice.actions
+export const { fetchSongs, fetchSongsError, fetchSongsSuccess, addSong, addSongError, addSongSuccess, editSong, editSongSuccess, editSongError } = songSlice.actions
 export default songSlice.reducer 

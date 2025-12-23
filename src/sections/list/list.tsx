@@ -6,11 +6,13 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchSongs } from "../../store/songSlice";
 import type { Song } from '../../types'
+import EditSong from "../../components/edit-song";
 
 export default function List() {
     const dispatch = useDispatch();
     const { data, error, loading } = useSelector((state: RootState) => state.songs)
     const [list,setList] = useState<Song[]>([])
+    const [edit,setEdit] = useState<Song | null>()
     useEffect(() => {
         dispatch(fetchSongs())
     }, [dispatch])
@@ -39,8 +41,9 @@ export default function List() {
                 gap: '2',
                 margin: "auto"
             })}>
-                {list.map(item => <SongItem title={item.title} artist={item.artist} album={item.album} genre={item.genre} albumArt={item.secure_url} />)}
+                {list.map(item => <SongItem title={item.title} artist={item.artist} album={item.album} genre={item.genre} albumArt={item.secure_url} onEdit={() => setEdit(item)} _id={item._id!}/>)}
             </div>}
+            {edit && <EditSong song={edit} onClose={()=>setEdit(null)} />}
         </>
     )
 }
